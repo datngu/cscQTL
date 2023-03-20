@@ -205,30 +205,8 @@ nextflow run main.nf -resume --reads $reads --outdir "TEST_WITH_HPC" --genotype 
 cscQTL uses GNU General Public License GPL-3.
 
 
-## 7. References
+## 7. Reference
 
-Nguyen, D. T. et al. Circall: fast and accurate methodology for discovery of circular rnas from paired-end rna-sequencing data. BMC bioinformatics 22, 1–18 (2021).
-
-Gao, Y., Zhang, J. & Zhao, F. Circular rna identification based on multiple seed matching. Briefings in bioinformatics 19, 803–810 (2018).
-
-Zhang, X.-O. et al. Diverse alternative back-splicing and alternative splicing landscape of circular rnas. Genome research 26, 1277–1287 (2016).
-
-Ongen, H., Buil, A., Brown, A. A., Dermitzakis, E. T. & Delaneau, O. Fast and efficient qtl
-mapper for thousands of molecular phenotypes. Bioinformatics 32, 1479–1485 (2016).
-
-Stegle, O., Parts, L., Piipari, M., Winn, J. & Durbin, R. Using probabilistic estimation of expression residuals (peer) to obtain increased power and interpretability of gene expression analyses. Nature protocols 7, 500–507 (2012).
-
-
-Hormozdiari, F. et al. Colocalization of gwas and eqtl signals detects target genes. The
-American Journal of Human Genetics 99, 1245–1260 (2016).
-
-Di Tommaso, P. et al. Nextflow enables reproducible computational workflows. Nature biotechnology 35, 316–319 (2017).
-
-
-Chang, C. C. et al. Second-generation plink: rising to the challenge of larger and richer
-datasets. Gigascience 4, s13742–015 (2015).
-
-Storey, J. D. & Tibshirani, R. Statistical significance for genomewide studies. Proceedings of the National Academy of Sciences 100, 9440–9445 (2003).
 
 
 
