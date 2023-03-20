@@ -1,10 +1,10 @@
 #!/usr/bin/env nextflow
 /*
 ========================================================================================
-                          nf-rnaQTL
+                    cscQTL : consensus-based circRNA QTL analysis
 ========================================================================================
  Circular RNA QTL Analysis Pipeline.
- https://github.com/datngu/nf-rnaQTL
+ https://github.com/datngu/cscQTL
  Author: Dat T Nguyen
  Contact: ndat<at>utexas.edu
 ----------------------------------------------------------------------------------------
