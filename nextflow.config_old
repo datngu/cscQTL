@@ -1,0 +1,8 @@
+process.container = 'ndatth/circall:v1.0.1'
+runOptions = '-u $(id -u):$(id -g)'
+docker.enabled = true
+singularity.autoMounts = true
+
+executor {
+    queueSize = 50
+}

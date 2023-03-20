@@ -1,0 +1,30 @@
+name: rna-tools
+channels:
+  - bioconda
+  - anaconda
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  # for CirCall
+  - bioconda::bioconductor-genomicfeatures
+  - bioconda::bioconductor-biostrings
+  - r-foreach
+  - r-doparallel
+  - r-data.table
+  - r-base=4.0.2
+  # for CIRI2 
+  - bwa=0.7.17
+  # for circexplorer2
+  - bioconda::ucsc-gtftogenepred
+  - circexplorer2=2.3.3
+  - bioconda::samtools
+  - star=2.5.2a
+  # for salmon
+  - salmon=1.3.0
+  - bioconda::bioconductor-tximport
+  # for leafcutter
+  - bioconda::regtools=0.6.0
+  - anaconda::scikit-learn
+  # quantile norm - this package currently have some error, need to install manually
+  - conda-forge::c-compiler

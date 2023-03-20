@@ -1,0 +1,15 @@
+name: qtl-package
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - r-peer
+  - r-coloc=3.1
+  - bioconductor-qvalue
+  - plink=1.90b6.21
+  - bcftools
+#  - r-data.table
+  - pandas
+  - r-devtools
