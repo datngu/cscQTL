@@ -1,4 +1,4 @@
-mkdir data/sumstat
+mkdir -p data/sumstat
 
 # Publication: Multiple common variants for celiac disease influencing immune gene expression. [Dubois et al., 2010] nature genetics
 # celiac disease [CEL] 
