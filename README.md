@@ -9,7 +9,14 @@
 cscQTL is an integrative framework for circular RNA quantitative trait locus (circQTL) discovery. The motivation for this framework is current circQTL studies relies hevily on a single circRNA calling method to annotate and quantify circRNAs. Regardless the efforts of state-of-the-art circRNA calling methods, circRNA detection is still suffer from a certain amount of false positive and circRNA detection exhibits little agreement between calling tools that cause divergence results in circQTL downstream analyses. cscQTL resolves the problem by combining inputs of serveal circRNA calling algorithm and re-quantify circRNA expression with Quasi-mapping by construction the pseudo circRNA references. cscQTL is implemented as an ready to use pipeline based on Nextflow. It also intergrate an automatic procedure to perform collocation with COLOC. For comparison purpose, the tool also allow users perform single method circQTL with Circall, CIRI2, CIRCExplorer2.
 
 
+**cscQTL pipeline**
+
+
 ![cscQTL pipeline](https://github.com/datngu/cscQTL/blob/main/docs/cscQTL.png)
+
+
+
+
 
 ## 2. Installation
   
