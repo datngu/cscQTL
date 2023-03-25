@@ -215,10 +215,8 @@ cscQTL uses GNU General Public License GPL-3.
 
 ## 7. Reference
 
+Dat Thanh Nguyen. 2023. "An integrative framework for circular RNA quantitative trait locus discovery with application in human T cells." bioRxiv 2023.03.22.533756; doi: https://doi.org/10.1101/2023.03.22.533756
 
-An integrative framework for circular RNA quantitative trait locus discovery with application in human T cells
-Dat Thanh Nguyen
-bioRxiv 2023.03.22.533756; doi: https://doi.org/10.1101/2023.03.22.533756
 
 
 
