@@ -44,6 +44,11 @@ params.ciri2           = false
 params.circexplorer2   = false
 params.salmon          = false
 
+// for revision
+params.revise          = true
+params.ciriquant_param = "$baseDir/data/grch38_tran.yml"
+
+
 
 
 log.info """\
@@ -81,6 +86,9 @@ log.info """\
 nextflow.enable.dsl=2
 
 include { RECOUNT_get_consensus; RENAME_circall; RENAME_ciri2; RENAME_circexp2; RECOUNT_get_peseudo_seqs; RECOUNT_index_peseudo_seqs; RECOUNT_mapping; RECOUNT_count; RECOUNT_merge_samples; RECOUNT_quantile_norm; RECOUNT_covariate_processing; RECOUNT_chrom_splitting; RECOUNT_qtl_mapping; RECOUNT_merge_qtl_results; RECOUNT_apply_qvalue; RECOUNT_export_all_peer_covariates; RECOUNT_export_optimal_peer_covariates; RECOUNT_qtl_mapping_nominal; RECOUNT_merge_qtl_results_nominal } from './module/recount'
+
+include { circRNA_FINDER_pipeline } from './module/circRNA_finder'
+include { CQ_circRNA_finder; CQ_CIRI2; CQ_circexp2 } from './module/ciri-quant'
 
 
 workflow {
@@ -134,7 +142,14 @@ workflow {
         RECOUNT_merge_qtl_results_nominal(RECOUNT_qtl_mapping_nominal.out.collect())
     }
 
+    // RUNING pipeline for BOVINE_CIRCQTL
+    if( params.revise ){
+        circRNA_FINDER_pipeline(STAR_mapping.out)
+        CQ_circRNA_finder(read_pairs_ch, circRNA_FINDER_pipeline.out.collect())
 
+        CQ_CIRI2(read_pairs_ch, RENAME_ciri2.out.collect())
+        CQ_circexp2(read_pairs_ch, RENAME_circexp2.out.collect())
+    }
 
     // This step is shared bw single methods!
     if( params.circall || params.ciri2 || params.circexplorer2){

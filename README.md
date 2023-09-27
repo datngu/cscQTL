@@ -1,5 +1,11 @@
 # cscQTL: An integrative framework for circular RNA quantitative trait locus discovery
 
+
+## Update:
+
+__27 Sep 2023:__ 
+- fix bugs in vcf filtering.
+- implmenting sub-pipline cscQTL_bed.nf: this pipline is to allow cscQTL take inputs from other circRNA calling tools and different quantification approach.
   
 
 
@@ -65,7 +71,7 @@ git clone  https://github.com/datngu/cscQTL.git
 
  
 
-## 3. Parameters
+## 3. Main pipeline parameters
 
   
 | Parameters          | Description                                                                                                         | Default setting                        |
@@ -98,9 +104,34 @@ git clone  https://github.com/datngu/cscQTL.git
 | ciri2               | running circQTL with CIRI2                                                                                          | false                                  |
 | circexplorer2       | running circQTL with CIRCExplorer2                                                                                  | false                                  |
 
+## 4. cscQTL_bed.nf pipeline parameters
 
 
-## 4. Input data explaination
+  
+| Parameters          | Description                                                                                                         | Default setting                        |
+| :------------------ | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------- |
+| genome              | genome in fasta format                                                                                              | $baseDir/data/ref/genome.fa            |
+| bed_files               | bed files input                                                                         | $baseDir/data//data/bed/*.bed |
+| genotype            | genotype in vcf.gz format                                                                                           | $baseDir/data/genotype.vcf.gz          |
+| meta                | meta data in csv format - using for matching covariates and rna file names                                          | $baseDir/data/meta.csv                 |
+| sumstat\_files      | summary statistics for COLOC analyses                                                                               | $baseDir/data/sumstat/\*.gz            |
+| meta\_sumstat       | summary statistics information - for matching file names and detail sample sizes                                    | $baseDir/data/meta\_sumstat.csv        |
+| trace\_dir          | directory for tracing output - all intermediate files in the analyses will be soft-linked here - used for debugging | $baseDir/trace\_dir                    |
+| outdir              | directory of output                                                                                                 | $baseDir/results                       |
+| Running parameters  |                                                                                                                     |                                        |
+| chrom               | chromsome range used for QTL mapping                                                                                | 1\..22                                 |
+| peer                | PEER range used for optimize the number of PEER factors                                                             | 1\..20                                 |
+| genotype\_PCs       | number of genotype principle components used for QTL mapping                                                        | 4                                      |
+| bsj\_filter         | BSJ read cutoff for circRNA candidate filtering                                                                     | 2                                      |
+| consensus           | number of circRNA calling methods requires to accept a circRNA candidate for consensus filtering                    | 1                                      |
+| exp\_prop           | population expression cutoff for filtering circRNAs                                                                 | 0\.3                                   |
+| maf                 | MAF cutoff for genotype filtering                                                                                   | 0\.05                                  |
+| fdr                 | q-value cutoff                                                                                                      | 0\.05                                  |
+| fastqtl\_window     | FastQTL window size                                                                                                 | 1\.00E+06                              |
+| Pipeline parameters |                                                                                                                     |                                        |                                  |
+| coloc               | running collocation analysis - summary statistics required                                                          | false                                  |
+
+## 5. Input data explaination
 
 
 We prepared a script to download the needed annotation of human genome hg38, annotation v106. Note: the script will automaticly places the files in **data/ref**
@@ -153,8 +184,9 @@ The **meta.csv** file is very important and need to pay careful attention. Its n
 This file is to provide the tools file names of summary statistics and its case-control ratio. The column names must be exact: file_name, case_prop.
 
 
-## 5. Real data analysis with 40 t-cell dataset
+## 6. Real data analysis with 40 t-cell dataset
 
+### 6.1 Full pipeline running
 Bellow is the real scripts I used to apply the tool for the 40 t-cell dataset.
 
 ```sh
@@ -187,7 +219,6 @@ genotype="$PWD/tcel_hg38.vcf.gz"
 ```
 
 
-
 If you run in a local computer with Docker:
 
 ```sh
@@ -208,26 +239,60 @@ nextflow run main.nf -resume --reads $reads --outdir "TEST_WITH_HPC" --genotype 
 
 
 
-## 6. License
+### 6.2 cscQTL_bed pipeline running
+
+Bellow is scripts I used to apply the tool for the 40 t-cell dataset. Sample bed file data are included in the __"data/bed"__ directory. The required bed file is 1-based coordinate system. Column 4 is the geneID, column 5 is the normalized quantification (used directly for QTL mapping), column 6 is the number of BSJ reads (used for filtering).
+
+```sh
+### select the working directory - you may need to custome yourself
+# clonning the pipeline
+git clone  https://github.com/datngu/cscQTL.git
+
+# change to the pipeline directory
+cd cscQTL
+
+# download the annotation - the files will be placed to matched the default setting
+bash download_hg38_annotation.sh
+
+# download the summary statistics - the files will be placed to matched the default setting
+bash dowload_sumstats.sh
+
+
+# the genotype data, I provide the hg38 genome (converted to hg38 with crossmap)
+wget https://github.com/datngu/data/releases/download/v.0.0.2/tcel_hg38.vcf.gz -O tcel_hg38.vcf.gz
+genotype="$PWD/tcel_hg38.vcf.gz"
+
+
+```
+
+
+If you run in a local computer with Docker:
+
+```sh
+
+nextflow run cscQTL_bed.nf -resume --bed_files "$PWD/data/bed/*.bed" --outdir "TEST_WITH_LOCAL" --genotype $genotype --coloc true -with-report -profile standard
+
+
+```
+
+If you run in a HCP server with Singularity and Slurm:
+
+```sh
+
+nextflow run cscQTL_bed.nf -resume --bed_files "$PWD/data/bed/*.bed" --outdir "TEST_WITH_HPC" --genotype $genotype --coloc true -with-report -profile cluster
+
+
+```
+
+
+## 7. License
   
 cscQTL uses GNU General Public License GPL-3.
 
 
-## 7. Reference
+## 8. Reference
 
 Dat Thanh Nguyen. 2023. "An integrative framework for circular RNA quantitative trait locus discovery with application in human T cells." bioRxiv 2023.03.22.533756; doi: https://doi.org/10.1101/2023.03.22.533756
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -207,7 +207,7 @@ process RECOUNT_covariate_processing {
     
     publishDir "${params.trace_dir}/recount_qtl_input", mode: 'symlink', overwrite: true
     container 'ndatth/qtl-package:v0.0.0'
-    memory '4 GB'
+    memory '8 GB'
 
     input:
     path meta
